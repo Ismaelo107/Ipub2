@@ -8,7 +8,6 @@ use App\Models\Categoria;
 
 class Stock extends Model
 {
-    protected $table = 'stocks';
 
     protected $fillable = [
         'categoria_id',
