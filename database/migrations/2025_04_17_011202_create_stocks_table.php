@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->decimal('precio_venta', 8, 2);
             $table->decimal('precio_compra', 8, 2);
             $table->boolean('disponible')->default(true);
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
     }
