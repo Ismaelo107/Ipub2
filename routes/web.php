@@ -5,4 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::view('/stock', 'stock')->name('stock');
+Route::view('/categoria', 'categoria')->name('categoria');
 Route::get('/comanda/{mesa}', ComandaComponent::class)->name('comanda');
