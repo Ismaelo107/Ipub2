@@ -1,5 +1,5 @@
 <div>
-    <h1>Hola desde el componente de mesa</h1>
+
 
     <div class="grid grid-cols-3 gap-6 ">
         @foreach($mesas as $mesa)
