@@ -8,4 +8,4 @@ Route::view('/', 'home')->name('home');
 Route::view('/stock', 'stock')->name('stock');
 Route::view('/show/stock','showStock')->name('showStock');
 Route::view('/categoria', 'categoria')->name('categoria');
-Route::get('/mesa/{mesa}', ComandaComponent::class)->name('comanda');
+Route::get('/comanda/{mesa}', ComandaComponent::class)->name('comanda');

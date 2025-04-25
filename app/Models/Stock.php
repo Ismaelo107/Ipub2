@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Categoria;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stock extends Model
 {
@@ -22,5 +23,11 @@ class Stock extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
+
+    public function comanda(): HasMany
+    {
+        return $this->HasMany(Comanda::class);
+    }
+
 
 }

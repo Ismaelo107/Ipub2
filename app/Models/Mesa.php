@@ -16,4 +16,9 @@ class Mesa extends Model
         'formaPago'
 
     ];
+
+    public function comandas()
+    {
+        return $this->hasMany(Comanda::class);
+    }
 }

@@ -13,6 +13,8 @@
     No lo quiero mostrar ya que en la opción de crear el producto me renvia
     <a class=" text-3xl font-medium" href="{{route('categoria')}}">Categoria</a>
     -->
+
+
     <a class=" text-3xl font-medium" href="{{route('stock')}}">Productos</a>
     <a class=" text-3xl font-medium" href="{{route('showStock')}}">Stock</a>
 </div>

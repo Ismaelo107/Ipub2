@@ -1,3 +1,3 @@
 <x-layouts.app>
-    @livewire('comanda')
+    @livewire('comanda', ['mesa' => $mesa])
 </x-layouts.app>

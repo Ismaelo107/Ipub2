@@ -2,20 +2,84 @@
 
 namespace App\Livewire;
 
+use App\Models\Comanda;
 use App\Models\Mesa;
+use App\Models\Stock;
 use Livewire\Component;
 
 class ComandaComponent extends Component
 {
-    public $mesa;
+    public $producto;
+    public $comandas = [];
+    public $stockId;
+    public $cantidad;
+    public $precio;
+    public $estado;
+    public $notas;
 
-    public function mount($mesa)
+    public $mesa;
+    public $stocks;
+
+
+    //Usa el Model bindin que consiste en que el propio laravel busca la mesa por el id automaticamente
+    public function mount(Mesa $mesa)
     {
-        $this->mesa = Mesa::find($mesa);
+        $this->mesa = $mesa;
+        $this->stocks = Stock::all();
+        $this->obtenerComandas();
+
     }
+
+    public function crearComanda()
+    {
+        $this->validate([
+            'stockId' => 'required|exists:stocks,id',
+            'cantidad' => 'required|numeric|min:1',
+            'estado' => 'required|string|max:50',
+            'notas' => 'nullable|string',
+        ], [
+            'stockId.required' => 'Debes seleccionar un producto.',
+            'stockId.exists' => 'El producto seleccionado no existe.',
+            'cantidad.required' => 'La cantidad es obligatoria.',
+            'cantidad.numeric' => 'La cantidad debe ser un número.',
+            'cantidad.min' => 'La cantidad debe ser al menos 1.',
+            'estado.required' => 'El estado es obligatorio.',
+            'estado.string' => 'El estado debe ser texto.',
+            'estado.max' => 'El estado no debe superar los 50 caracteres.',
+            'notas.string' => 'Las notas deben ser texto.',
+        ]);
+
+
+        //TODO tengo que corregier si no queda productos en el stock
+        $stock = Stock::find($this->stockId);
+
+        Comanda::create([
+            'mesa_id' => $this->mesa->id,
+            'stock_id' => $this->stockId,
+            'cantidad' => $this->cantidad,
+            'precio' => $stock->precio_venta,
+            'estado' => $this->estado,
+            'notas' => $this->notas,
+        ]);
+
+        // Restar del stock y guardar
+        $stock->unidades -= $this->cantidad;
+        $stock->save();
+
+        // Limpiar inputs
+        $this->reset(['stockId', 'cantidad', 'estado', 'notas']);
+    }
+
+    public function obtenerComandas()
+    {
+        $this->comandas = Comanda::where('mesa_id', $this->mesa->id)->get();
+    }
+
 
     public function render()
     {
-        return view('livewire.comanda-component');
+        return view('livewire.comanda-component', [
+            'mesa' => $this->mesa,  // Pasar $mesa a la vista
+        ]);
     }
 }
