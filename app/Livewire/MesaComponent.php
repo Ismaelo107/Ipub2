@@ -9,10 +9,9 @@ class MesaComponent extends Component
 {
     public $mesas;
 
-
     public function mount()
     {
-        $this->mesas = Mesa::all();
+        $this->mesas = Mesa::with('comandas')->get();
     }
 
     public function abrirMesa($mesaId)

@@ -1,21 +1,15 @@
-<div>
+<div class="grid grid-cols-5 gap-4 p-3 justify-center w-auto">
+    @foreach($mesas as $mesa)
+        <div wire:click="abrirMesa({{ $mesa->id }})" class="p-4 rounded-lg shadow-md text-center w-auto
+                                {{ $mesa->comandas->isNotEmpty() ? 'bg-green-400' : 'bg-red-400' }}">
+
+            <h2 class="text-lg font-bold">Mesa #{{ $mesa->id }}</h2>
+            <p class="text-sm">Estado: <strong>{{ ucfirst($mesa->estado) }}</strong></p>
+            <p class="text-sm">Forma de pago: <strong>{{ ucfirst($mesa->forma_pago) }}</strong></p>
+            <p class="text-sm">Total: <strong>${{ number_format($mesa->id, 2) }}</strong></p>
 
 
-    <div class="grid grid-cols-3 gap-6 ">
-        @foreach($mesas as $mesa)
-            <div wire:click="abrirMesa({{$mesa->id}})"
-                 class="bg-blue-500 rounded-lg text-center p-4">
-                <h2>
-                    Mesa #{{$mesa ->id}}
-                </h2>
-                <h4>
-                    Estado: {{$mesa ->estado}}
-                </h4>
-                <a href="{{route('comanda',[ 'mesa' => $mesa->id ])}}">
-                    Ir a comanda
-                </a>
-            </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
 </div>
 
