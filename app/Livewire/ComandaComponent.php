@@ -70,7 +70,7 @@ class ComandaComponent extends Component
         $this->validate([
             'stockId' => 'required|exists:stocks,id',
             'cantidad' => 'required|numeric|min:1',
-            'estado' => 'required|string|max:50',
+            //'estado' => 'required|string|max:50',
             'notas' => 'nullable|string',
         ], [
             'stockId.required' => 'Debes seleccionar un producto.',
@@ -78,7 +78,7 @@ class ComandaComponent extends Component
             'cantidad.required' => 'La cantidad es obligatoria.',
             'cantidad.numeric' => 'La cantidad debe ser un número.',
             'cantidad.min' => 'La cantidad debe ser al menos 1.',
-            'estado.required' => 'El estado es obligatorio.',
+            //'estado.required' => 'El estado es obligatorio.',
             'estado.string' => 'El estado debe ser texto.',
             'estado.max' => 'El estado no debe superar los 50 caracteres.',
             'notas.string' => 'Las notas deben ser texto.',
@@ -93,7 +93,7 @@ class ComandaComponent extends Component
             'stock_id' => $this->stockId,
             'cantidad' => $this->cantidad,
             'precio' => $stock->precio_venta,
-            'estado' => $this->estado,
+            //'estado' => $this->estado,
             'notas' => $this->notas,
         ]);
 
@@ -102,7 +102,7 @@ class ComandaComponent extends Component
         $stock->save();
 
         // Limpiar inputs
-        $this->reset(['stockId', 'cantidad', 'estado', 'notas']);
+        $this->reset(['stockId', 'cantidad', 'notas']);
     }
 
     public function obtenerComandas()

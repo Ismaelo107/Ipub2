@@ -64,15 +64,6 @@
                 @error('cantidad') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
             </div>
 
-            <div>
-                <label class="block text-sm font-medium">Estado</label>
-                <select wire:model="estado" class="w-full rounded-md border-gray-300 shadow-sm">
-                    <option value="">Selecciona estado</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="servido">Servido</option>
-                </select>
-                @error('estado') <span class="text-sm text-red-600">{{ $message }}</span> @enderror
-            </div>
 
             <div>
                 <label class="block text-sm font-medium">Notas</label>
@@ -94,7 +85,6 @@
                 <p><strong>ID:</strong> {{ $comanda->id }}</p>
                 <p><strong>Producto:</strong> {{ $comanda->stock->nombre ?? '—' }}</p>
                 <p><strong>Cantidad:</strong> {{ $comanda->cantidad }}</p>
-                <p><strong>Estado:</strong> {{ $comanda->estado }}</p>
                 <p><strong>Notas:</strong> {{ $comanda->notas }}</p>
             </div>
         @empty
