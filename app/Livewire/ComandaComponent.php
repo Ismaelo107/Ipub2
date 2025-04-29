@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Categoria;
 use App\Models\Comanda;
 use App\Models\Mesa;
 use App\Models\Stock;
@@ -20,12 +21,46 @@ class ComandaComponent extends Component
     public $mesa;
     public $stocks;
 
+    public $categorias;
+    public $categoriaSeleccionada = null;
+    public $productosFiltrados = [];
+
+
+    public function verProductos($categoriaId): void
+    {
+        // Si ya está seleccionada, la deseleccionamos
+        if ($this->categoriaSeleccionada == $categoriaId) {
+            $this->categoriaSeleccionada = null;
+            $this->productosFiltrados = [];
+            return;
+        }
+
+        $this->categoriaSeleccionada = $categoriaId;
+        // Obtener solo productos de esta categoría
+        $this->productosFiltrados = Categoria::find($categoriaId)
+            ->stocks()
+            ->where('disponible', true)
+            ->get();
+    }
+
+    public function seleccionarProducto($id)
+    {
+        if ($this->stockId == $id) {
+            $this->cantidad = $this->cantidad + 1;
+        } else {
+            $this->stockId = $id;
+            $this->cantidad = 1;
+        }
+    }
+
 
     //Usa el Model bindin que consiste en que el propio laravel busca la mesa por el id automaticamente
     public function mount(Mesa $mesa)
     {
         $this->mesa = $mesa;
         $this->stocks = Stock::all();
+        $this->categorias = Categoria::withCount('stocks')->get();
+
         $this->obtenerComandas();
 
     }
