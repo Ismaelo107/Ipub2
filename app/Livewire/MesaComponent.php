@@ -9,7 +9,7 @@ class MesaComponent extends Component
 {
     public $mesas;
 
-    public function mount()
+     public function mount()
     {
         $this->mesas = Mesa::with('comandas')->get();
     }

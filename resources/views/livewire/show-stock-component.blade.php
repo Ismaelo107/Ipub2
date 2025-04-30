@@ -28,7 +28,8 @@
                         <td class="px-4 py-2 text-sm">{{$producto-> descripcion ?? 'Sin descripción'}}</td>
                         <td class="px-4 py-2 text-sm">
                             <div class=" item-center">
-                                <a href="{{ route('stock') }}" class="inline-block px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
+                                <a href="{{ route('editStock', ['productoId' => $producto->id]) }}"
+                                   class="inline-block px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
                                     Editar
                                 </a>
                             </div>
@@ -39,9 +40,10 @@
             </table>
         </div>
     @endif
-        <div class="mt-6 text-center">
-            <a href="{{ route('stock') }}" class="inline-block px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
-                Insertar Nuevo Producto
-            </a>
-        </div>
+    <div class="mt-6 text-center">
+        <a href="{{ route('stock') }}"
+           class="inline-block px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
+            Insertar Nuevo Producto
+        </a>
+    </div>
 </div>
