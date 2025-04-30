@@ -63,6 +63,15 @@ class ComandaComponent extends Component
 
         $this->obtenerComandas();
 
+        // Selecciona automáticamente la primera categoría si hay
+        if ($this->categorias->isNotEmpty()) {
+            $this->categoriaSeleccionada = $this->categorias->first()->id;
+            $this->productosFiltrados = Categoria::find($this->categoriaSeleccionada)
+                ->stocks()
+                ->where('disponible', true)
+                ->get();
+        }
+
     }
 
     public function crearComanda()
