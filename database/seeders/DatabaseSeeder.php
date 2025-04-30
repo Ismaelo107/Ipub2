@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categoria;
 use App\Models\Mesa;
+use App\Models\Stock;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,7 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
         Mesa::factory(10)->create();
+        $categorias = Categoria::factory(10)->create();
+
+        foreach ($categorias as $categoria) {
+            Stock::factory()
+                ->count(10)
+                ->create([
+                    'categoria_id' => $categoria->id
+                ]);
+        }
     }
 }

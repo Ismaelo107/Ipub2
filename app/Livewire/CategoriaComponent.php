@@ -15,10 +15,11 @@ class CategoriaComponent extends Component
 
         $this->validate(
             [
-                'nombre' => 'required'
+                'nombre' => 'required|unique:categorias,nombre'
             ],
             [
-                'nombre.required' => 'El campo nombre es requerido'
+                'nombre.required' => 'El campo nombre es requerido',
+                'nombre.unique' => 'Esta categoria ya existe'
             ]
         );
 

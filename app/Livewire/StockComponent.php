@@ -20,7 +20,7 @@ class StockComponent extends Component
     {
         $this->validate(
             [
-                'nombre' => 'required|string|max:50',
+                'nombre' => 'required|string|max:50|unique:stocks,nombre',
                 'unidades' => 'required|integer|min:1',
                 'precio_venta' => 'required|numeric|min:1',
                 'precio_compra' => 'required|numeric|min:0',
@@ -29,6 +29,7 @@ class StockComponent extends Component
             ],
             [
                 'nombre.required' => 'El nombre es requerido',
+                'nombre.unique' => 'El nombre de este producto ya existe',
                 'unidades.required' => 'La unidades es requerida',
                 'precio_venta.required' => 'El precio es requerido',
                 'precio_compra.required' => 'El precio es requerido',

@@ -15,6 +15,8 @@ class ShowStockComponent extends Component
         $this->productos = Stock::with('categoria')->get();
     }
 
+
+
     public function render()
     {
         return view('livewire.show-stock-component');

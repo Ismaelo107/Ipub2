@@ -101,8 +101,10 @@ class ComandaComponent extends Component
         $stock->unidades -= $this->cantidad;
         $stock->save();
 
+
         // Limpiar inputs
         $this->reset(['stockId', 'cantidad', 'notas']);
+        $this->obtenerComandas();
     }
 
     public function obtenerComandas()
