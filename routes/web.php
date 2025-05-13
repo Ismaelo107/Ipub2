@@ -10,6 +10,5 @@ Route::view('/', 'home')->name('home');
 Route::view('/stock', 'stock')->name('stock');
 Route::view('/show/stock', 'showStock')->name('showStock');
 Route::get('/edit/{productoId}/stock', EditStockComponent::class)->name('editStock');
-
 Route::view('/categoria', 'categoria')->name('categoria');
 Route::get('/comanda/{mesa}', ComandaComponent::class)->name('comanda');

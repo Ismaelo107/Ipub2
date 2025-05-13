@@ -4,23 +4,20 @@
         <div class="w-3/4">
 
             {{--CATEGORIAS--}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div class="grid grid-cols-5 gap-4">
                 @foreach($categorias as $categoria)
                     <div wire:click="verProductos({{ $categoria->id }})"
-                         class="p-4 rounded-2xl bg-purple-100 shadow-lg text-center border cursor-pointer transition hover:shadow-lg hover:bg-yellow-100 hover:ring-3 ring-purple-100 border-purple-100
+                         class="p-3 rounded-2xl bg-purple-100 shadow-lg text-center border cursor-pointer transition hover:shadow-lg hover:bg-yellow-100 hover:ring-3 ring-purple-100 border-purple-100
              {{ $categoriaSeleccionada == $categoria->id ? ' bg-yellow-50 border-yellow-300 ring-4 ring-yellow-200 ' : 'border-gray-200' }}">
-                        <h3 class="font-bold text-black">{{ $categoria->nombre }}</h3>
+                        <h3 class="font-bold text-black text-2xl">{{ $categoria->nombre }}</h3>
                     </div>
                 @endforeach
             </div>
 
             {{-- PRODUCTOS (STOCK) --}}
-            <div class="mt-5 mb-5">
+            <div class="mt-5 mb-5" wire:click="crearComanda">
                 @if($categoriaSeleccionada)
-                    <div class="bg-red-50 rounded-lg shadow p-1">
-                        <h3 class="text-lg font-bold mb-3 text-center">
-                            {{ $categorias->firstWhere('id', $categoriaSeleccionada)->nombre }}
-                        </h3>
+                    <div class=" rounded-lg shadow p-1">
 
                         @if($productosFiltrados->isNotEmpty())
                             <div class="grid grid-cols-6 gap-4">
@@ -50,6 +47,7 @@
             </div>
 
             {{--FORMULARIO PARA CREAR COMANDA--}}
+            {{--
             <div>
                 <form wire:submit.prevent="crearComanda" class="grid grid-cols-1 gap-4">
                     <div>
@@ -82,7 +80,9 @@
                     </button>
                 </form>
             </div>
+            --}}
         </div>
+
 
         <div class="w-1/4">
             {{-- Zona de Ticket --}}
@@ -127,21 +127,24 @@
             </div>
 
 
-            <div class="mt-4 ">
-                <h3 class="text-lg font-semibold m-2">Comandas registradas</h3>
-                @forelse($comandas as $comanda)
-                    <div class="mb-3 p-4 border rounded-lg shadow-sm">
-                        <p><strong>ID:</strong> {{ $comanda->id }}</p>
-                        <p><strong>Producto:</strong> {{ $comanda->stock->nombre ?? '—' }}</p>
-                        <p><strong>Cantidad:</strong> {{ $comanda->cantidad }}</p>
-                        <p><strong>Notas:</strong> {{ $comanda->notas }}</p>
-                    </div>
-                @empty
-                    <p class="text-gray-600">No hay comandas aún para esta mesa.</p>
-                @endforelse
-            </div>
         </div>
 
     </div>
+    <div class="mt-4 max-h-80 overflow-y-auto">
+        <h3 class="text-lg font-semibold m-2">Comandas registradas</h3>
+        <div class="grid gap-4">
+            @forelse($comandas as $comanda)
+                <div class="mb-3 p-4 border rounded-lg shadow-sm">
+                    <p><strong>ID:</strong> {{ $comanda->id }}</p>
+                    <p><strong>Producto:</strong> {{ $comanda->stock->nombre ?? '—' }}</p>
+                    <p><strong>Cantidad:</strong> {{ $comanda->cantidad }}</p>
+                    <p><strong>Notas:</strong> {{ $comanda->notas }}</p>
+                </div>
+            @empty
+                <p class="text-gray-600">No hay comandas aún para esta mesa.</p>
+            @endforelse
+        </div>
+    </div>
+
 
 </div>
