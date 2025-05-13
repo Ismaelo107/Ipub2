@@ -9,24 +9,18 @@ class CategoriaComponent extends Component
 {
     public $nombre;
 
-
     public function guardarCategoria()
     {
-
         $this->validate(
-            [
-                'nombre' => 'required|unique:categorias,nombre'
-            ],
-            [
-                'nombre.required' => 'El campo nombre es requerido',
+            ['nombre' => 'required|unique:categorias,nombre'],
+            ['nombre.required' => 'El campo nombre es requerido',
                 'nombre.unique' => 'Esta categoria ya existe'
             ]
         );
 
-        Categoria::create([
-            'nombre' => $this->nombre
-        ]);
-
+        Categoria::create(
+            ['nombre' => $this->nombre]
+        );
 
         return redirect(route('stock'));
     }

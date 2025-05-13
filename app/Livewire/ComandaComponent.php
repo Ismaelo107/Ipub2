@@ -25,6 +25,28 @@ class ComandaComponent extends Component
     public $categoriaSeleccionada = null;
     public $productosFiltrados = [];
 
+    protected $listeners = ['comandaEliminada' => 'actualizarProductosEliminado','comandaEditada' => 'actualizarProductosEditado'];
+
+    public function actualizarProductosEliminado($stockId, $cantidad)
+    {
+        $stock = Stock::find($stockId);
+
+        if ($stock) {
+            $stock->unidades += $cantidad;
+            $stock->save();
+        }
+
+        // Refrescar comandas y productos filtrados
+        $this->obtenerComandas();
+
+        if ($this->categoriaSeleccionada) {
+            $this->productosFiltrados = Categoria::find($this->categoriaSeleccionada)
+                ->stocks()
+                ->where('disponible', true)
+                ->get();
+        }
+    }
+
 
     public function verProductos($categoriaId): void
     {

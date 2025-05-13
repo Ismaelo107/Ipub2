@@ -8,7 +8,7 @@
                 @foreach($categorias as $categoria)
                     <div wire:click="verProductos({{ $categoria->id }})"
                          class="p-3 rounded-2xl bg-purple-100 shadow-lg text-center border cursor-pointer transition hover:shadow-lg hover:bg-yellow-100 hover:ring-3 ring-purple-100 border-purple-100
-             {{ $categoriaSeleccionada == $categoria->id ? ' bg-yellow-50 border-yellow-300 ring-4 ring-yellow-200 ' : 'border-gray-200' }}">
+                         {{ $categoriaSeleccionada == $categoria->id ? ' bg-yellow-50 border-yellow-300 ring-4 ring-yellow-200 ' : 'border-gray-200' }}">
                         <h3 class="font-bold text-black text-2xl">{{ $categoria->nombre }}</h3>
                     </div>
                 @endforeach
@@ -134,15 +134,11 @@
         <h3 class="text-lg font-semibold m-2">Comandas registradas</h3>
         <div class="grid gap-4">
             @forelse($comandas as $comanda)
-                <div class="mb-3 p-4 border rounded-lg shadow-sm">
-                    <p><strong>ID:</strong> {{ $comanda->id }}</p>
-                    <p><strong>Producto:</strong> {{ $comanda->stock->nombre ?? '—' }}</p>
-                    <p><strong>Cantidad:</strong> {{ $comanda->cantidad }}</p>
-                    <p><strong>Notas:</strong> {{ $comanda->notas }}</p>
-                </div>
+                @livewire('edit-comanda-component', ['comanda' => $comanda], key($comanda->id))
             @empty
                 <p class="text-gray-600">No hay comandas aún para esta mesa.</p>
             @endforelse
+
         </div>
     </div>
 
