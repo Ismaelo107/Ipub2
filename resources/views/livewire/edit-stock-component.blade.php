@@ -20,7 +20,7 @@
 
         <div>
             <label class="block">Precio Venta</label>
-            <input type="number" wire:model="precio_venta"
+            <input type="number" step="0.01" wire:model="precio_venta"
                    class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
                    placeholder="Precio Venta">
             @error('precio_venta')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
@@ -28,7 +28,7 @@
 
         <div>
             <label class="block">Precio Compra</label>
-            <input type="number" wire:model="precio_compra"
+            <input type="number" step="0.01" wire:model="precio_compra"
                    class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
                    placeholder="Precio Compra">
             @error('precio_compra')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror

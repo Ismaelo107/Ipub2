@@ -42,8 +42,8 @@ class EditStockComponent extends Component
             [
                 'nombre' => 'required|string|max:50',
                 'unidades' => 'required|integer|min:1',
-                'precio_venta' => 'required|numeric|min:1',
-                'precio_compra' => 'required|numeric|min:0',
+                'precio_venta' => 'required|decimal:0,2|min:1',
+                'precio_compra' => 'required|decimal:0,2|min:0',
                 'descripcion' => 'nullable|string|max:100',
                 'categoria_id' => 'required|integer|min:1'
             ],
@@ -51,6 +51,7 @@ class EditStockComponent extends Component
                 'nombre.required' => 'El nombre es requerido',
                 'unidades.required' => 'La unidades es requerida',
                 'precio_venta.required' => 'El precio es requerido',
+
                 'precio_compra.required' => 'El precio es requerido',
                 'categoria_id.required' => 'Agregar una categoria',
             ]

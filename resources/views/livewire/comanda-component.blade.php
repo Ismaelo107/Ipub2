@@ -134,6 +134,7 @@
         <h3 class="text-lg font-semibold m-2">Comandas registradas</h3>
         <div class="grid gap-4">
             @forelse($comandas as $comanda)
+
                 @livewire('edit-comanda-component', ['comanda' => $comanda], key($comanda->id))
             @empty
                 <p class="text-gray-600">No hay comandas aún para esta mesa.</p>

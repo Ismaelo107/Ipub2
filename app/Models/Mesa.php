@@ -21,4 +21,9 @@ class Mesa extends Model
     {
         return $this->hasMany(Comanda::class);
     }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
 }

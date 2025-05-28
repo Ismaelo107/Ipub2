@@ -10,22 +10,34 @@ use Livewire\Component;
 
 class ComandaComponent extends Component
 {
-    public $producto;
-    public $comandas = [];
-    public $stockId;
-    public $cantidad;
-    public $precio;
-    public $estado;
-    public $notas;
+    public $producto, $stockId, $cantidad, $precio, $estado, $notas, $mesa, $stocks, $categorias;
 
-    public $mesa;
-    public $stocks;
+    public $comandas = [], $productosFiltrados = [], $categoriaSeleccionada = null;
 
-    public $categorias;
-    public $categoriaSeleccionada = null;
-    public $productosFiltrados = [];
+    protected $listeners = ['comandaEliminada' => 'actualizarProductosEliminado', 'comandaUpdated' => 'obtenerComanda'];
 
-    protected $listeners = ['comandaEliminada' => 'actualizarProductosEliminado','comandaEditada' => 'actualizarProductosEditado'];
+
+    //Usa el Model bindin que consiste en que el propio laravel busca la mesa por el id automaticamente
+    public function mount(Mesa $mesa)
+    {
+        $this->mesa = $mesa;
+        $this->stocks = Stock::all();
+        $this->categorias = Categoria::withCount('stocks')->get();
+
+        $this->obtenerComandas();
+
+        // Selecciona automáticamente la primera categoría si hay
+        if ($this->categorias->isNotEmpty()) {
+            $this->categoriaSeleccionada = $this->categorias->first()->id;
+            $this->productosFiltrados = Categoria::find($this->categoriaSeleccionada)
+                ->stocks()
+                ->where('disponible', true)
+                ->get();
+        }
+
+    }
+
+
 
     public function actualizarProductosEliminado($stockId, $cantidad)
     {
@@ -67,34 +79,19 @@ class ComandaComponent extends Component
 
     public function seleccionarProducto($id)
     {
+        $this->obtenerComandas();
+
         if ($this->stockId == $id) {
+
             $this->cantidad = $this->cantidad + 1;
         } else {
+
             $this->stockId = $id;
             $this->cantidad = 1;
         }
     }
 
 
-    //Usa el Model bindin que consiste en que el propio laravel busca la mesa por el id automaticamente
-    public function mount(Mesa $mesa)
-    {
-        $this->mesa = $mesa;
-        $this->stocks = Stock::all();
-        $this->categorias = Categoria::withCount('stocks')->get();
-
-        $this->obtenerComandas();
-
-        // Selecciona automáticamente la primera categoría si hay
-        if ($this->categorias->isNotEmpty()) {
-            $this->categoriaSeleccionada = $this->categorias->first()->id;
-            $this->productosFiltrados = Categoria::find($this->categoriaSeleccionada)
-                ->stocks()
-                ->where('disponible', true)
-                ->get();
-        }
-
-    }
 
     public function crearComanda()
     {
@@ -113,10 +110,12 @@ class ComandaComponent extends Component
             ->first();
 
         if ($comandaExistente) {
+
             // Si ya existe, solo actualizamos la cantidad
             $comandaExistente->cantidad += $this->cantidad;
             $comandaExistente->save();
         } else {
+
             // Si no existe, creamos una nueva comanda
             Comanda::create([
                 'mesa_id' => $this->mesa->id,
@@ -133,13 +132,16 @@ class ComandaComponent extends Component
 
         // Limpiar inputs
         $this->reset(['stockId', 'cantidad', 'notas']);
-        $this->obtenerComandas();
     }
 
 
     public function obtenerComandas()
     {
-        $this->comandas = Comanda::where('mesa_id', $this->mesa->id)->get();
+        $this->comandas = Comanda::where('mesa_id', $this->mesa->id)
+            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
     }
 
 
@@ -148,5 +150,6 @@ class ComandaComponent extends Component
         return view('livewire.comanda-component', [
             'mesa' => $this->mesa,  // Pasar $mesa a la vista
         ]);
+
     }
 }
